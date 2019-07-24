@@ -72,7 +72,7 @@ class MainActivity : Activity() {
         // Init the Timezone
         timeManager.setTimeZone("Europe/Rome")
 
-        // Init the Fireiot
+        // Init the Fireiot (example of DeviceID eth iface MAC address) 
         fireiot = Fireiot(
             "B8:27:EB:95:11:EE",
             "wlan0",

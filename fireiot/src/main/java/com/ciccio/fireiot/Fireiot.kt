@@ -10,13 +10,11 @@ import com.google.firebase.database.*
 private val TAG = Fireiot::class.java.simpleName
 
 class Fireiot(
-    val macAddrs: String,
+    val deviceID: String,
     val iface: String,
     configHwValueEventListener: ValueEventListener,
     configPubValueEventListener: ValueEventListener
 ) {
-
-    // TODO - TEST RealTime DB Vs Firestore
 
     // Firebase vars
     private val auth: FirebaseAuth
@@ -61,17 +59,17 @@ class Fireiot(
         // Reference to Firebase Online/Offline service
         fireStatusRef = db.getReference(".info/connected")
         // Device Ref
-        deviceRef = db.getReference("/$macAddrs")
+        deviceRef = db.getReference("/$deviceID")
         // Ref to device specific status, is it online/offline
-        deviceStatusRef = db.getReference("/$macAddrs/status")
+        deviceStatusRef = db.getReference("/$deviceID/status")
         // Ref to Device Hw Config
-        configHwRef = db.getReference("/$macAddrs/config/hw")
+        configHwRef = db.getReference("/$deviceID/config/hw")
         // Ref to Pub/Sub Message Infrastructure Config
-        configPubRef = db.getReference("/$macAddrs/config/pub")
+        configPubRef = db.getReference("/$deviceID/config/pub")
         // Ref to Device PubKey Reference
-        pubKeyRef = db.getReference("/$macAddrs/config/pub_key")
+        pubKeyRef = db.getReference("/$deviceID/config/pub_key")
         // Ref Project errors data space
-        deviceErrorRef = db.getReference("/$macAddrs/errors/")
+        deviceErrorRef = db.getReference("/$deviceID/errors/")
 
         authenticate()
 
@@ -121,11 +119,11 @@ class Fireiot(
      * Custom Authenticate method on Firebase, for *@logicatsrl.eu devices
      */
     private fun authenticate() {
-        auth.signInWithEmailAndPassword("${macAddrs.replace(":","")}@logicatsrl.eu", macAddrs)
+        auth.signInWithEmailAndPassword("${deviceID.replace(":","")}@logicatsrl.eu", deviceID)
             .addOnCompleteListener { task ->
                 if(task.isSuccessful) {
                     // Login success
-                    Log.d(TAG, "@MSG >> Logged $macAddrs@logicatsrl.eu")
+                    Log.d(TAG, "@MSG >> Logged $deviceID@logicatsrl.eu")
                 } else {
                     // Login Fail
                     Log.d(TAG, "@MSG >> Login FAIL")

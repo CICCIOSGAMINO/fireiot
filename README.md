@@ -84,7 +84,7 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Init the Fireiot
+        // Init the Fireiot (Example of DeviceID as ETH iface MAC address )
         fireIot = Fireiot(
             "B8:27:EB:95:11:EE",
             "wlan0",
@@ -105,5 +105,9 @@ class MainActivity : Activity() {
 
 }
 ```
+
+Here a simple example of Activity where the Fireiot module is used to gathering the Firebase 
+IoT services. In this simple example as DeviceID we have used the ETH iface MAC address, but you 
+can pass the String value you want to handle your IoT devices. 
 
 
